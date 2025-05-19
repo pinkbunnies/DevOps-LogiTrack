@@ -10,13 +10,15 @@ using LogiTrack.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// SQLite + Identity
 builder.Services.AddDbContext<LogiTrackContext>(options =>
     options.UseSqlite("Data Source=logitrack.db"));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<LogiTrackContext>();
 
-var jwtKey = "this is a very secret key for jwt demo";
+// JWT config
+var jwtKey = "regergRTHEgwrGW$t43t$·t45yG%$YH$gferFERGEGR";
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,7 +36,11 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddMemoryCache();
+// In-memory caching with extended expiration
+builder.Services.AddMemoryCache(options =>
+{
+    options.ExpirationScanFrequency = TimeSpan.FromMinutes(5);
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -52,5 +58,28 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Seed admin user if not exists
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string adminEmail = "somebody@somewhere.com";
+    string adminPass = "Admin123_!2025";
+
+    if (!await roleManager.RoleExistsAsync("Manager"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Manager"));
+    }
+
+    if (await userManager.FindByEmailAsync(adminEmail) == null)
+    {
+        var admin = new ApplicationUser { UserName = adminEmail, Email = adminEmail };
+        var result = await userManager.CreateAsync(admin, adminPass);
+        if (result.Succeeded)
+            await userManager.AddToRoleAsync(admin, "Manager");
+    }
+}
 
 app.Run();

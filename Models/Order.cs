@@ -12,7 +12,11 @@ namespace LogiTrack.Models
 
         public required string CustomerName { get; set; }
         public DateTime DatePlaced { get; set; }
-        public List<InventoryItem> Items { get; set; } = new List<InventoryItem>();
+
+        // Opcional: persistencia entre sesiones
+        public string? SessionToken { get; set; }
+
+        public List<InventoryItem> Items { get; set; } = new();
 
         public void AddItem(InventoryItem item) => Items.Add(item);
 

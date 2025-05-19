@@ -32,14 +32,13 @@ namespace LogiTrack.Controllers
                 inventory = await _context.InventoryItems.AsNoTracking().ToListAsync();
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(30));
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
 
                 _cache.Set(cacheKey, inventory, cacheEntryOptions);
             }
 
             stopwatch.Stop();
             Console.WriteLine($"Inventory loaded in {stopwatch.ElapsedMilliseconds}ms");
-
             return inventory;
         }
 
@@ -49,7 +48,7 @@ namespace LogiTrack.Controllers
         {
             _context.InventoryItems.Add(item);
             await _context.SaveChangesAsync();
-            _cache.Remove("inventory_list"); // invalidate cache
+            _cache.Remove("inventory_list");
             return CreatedAtAction(nameof(GetAll), new { id = item.ItemId }, item);
         }
 
@@ -63,7 +62,7 @@ namespace LogiTrack.Controllers
 
             _context.InventoryItems.Remove(item);
             await _context.SaveChangesAsync();
-            _cache.Remove("inventory_list"); // invalidate cache
+            _cache.Remove("inventory_list");
             return NoContent();
         }
     }
