@@ -20,15 +20,23 @@ namespace LogiTrack.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetAll()
         {
-            return await _context.Orders.Include(o => o.Items).ToListAsync();
+            return await _context.Orders
+                .Include(o => o.Items)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetById(int id)
         {
-            var order = await _context.Orders.Include(o => o.Items).FirstOrDefaultAsync(o => o.OrderId == id);
+            var order = await _context.Orders
+                .Include(o => o.Items)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(o => o.OrderId == id);
+
             if (order == null)
                 return NotFound();
+
             return order;
         }
 
@@ -45,7 +53,10 @@ namespace LogiTrack.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Delete(int id)
         {
-            var order = await _context.Orders.Include(o => o.Items).FirstOrDefaultAsync(o => o.OrderId == id);
+            var order = await _context.Orders
+                .Include(o => o.Items)
+                .FirstOrDefaultAsync(o => o.OrderId == id);
+
             if (order == null)
                 return NotFound();
 
