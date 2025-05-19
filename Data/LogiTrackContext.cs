@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using LogiTrack.Models;
 
 namespace LogiTrack.Models
 {
-    public class LogiTrackContext : DbContext
+    public class LogiTrackContext : IdentityDbContext<ApplicationUser>
     {
         public LogiTrackContext(DbContextOptions<LogiTrackContext> options)
             : base(options)

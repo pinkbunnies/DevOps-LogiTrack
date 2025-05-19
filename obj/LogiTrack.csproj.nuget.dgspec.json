@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Mis Documentos\\GitHub\\DevOps\\LogiTrack\\LogiTrack.csproj": {}
+    "D:\\Mis Documentos\\GitHub\\DevOps-LogiTrack\\DevOps-LogiTrack\\LogiTrack.csproj": {}
   },
   "projects": {
-    "D:\\Mis Documentos\\GitHub\\DevOps\\LogiTrack\\LogiTrack.csproj": {
+    "D:\\Mis Documentos\\GitHub\\DevOps-LogiTrack\\DevOps-LogiTrack\\LogiTrack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Mis Documentos\\GitHub\\DevOps\\LogiTrack\\LogiTrack.csproj",
+        "projectUniqueName": "D:\\Mis Documentos\\GitHub\\DevOps-LogiTrack\\DevOps-LogiTrack\\LogiTrack.csproj",
         "projectName": "LogiTrack",
-        "projectPath": "D:\\Mis Documentos\\GitHub\\DevOps\\LogiTrack\\LogiTrack.csproj",
+        "projectPath": "D:\\Mis Documentos\\GitHub\\DevOps-LogiTrack\\DevOps-LogiTrack\\LogiTrack.csproj",
         "packagesPath": "C:\\Users\\bunny\\.nuget\\packages\\",
-        "outputPath": "D:\\Mis Documentos\\GitHub\\DevOps\\LogiTrack\\obj\\",
+        "outputPath": "D:\\Mis Documentos\\GitHub\\DevOps-LogiTrack\\DevOps-LogiTrack\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bunny\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -44,6 +44,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.5, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.4, )"
